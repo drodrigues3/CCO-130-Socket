@@ -147,12 +147,13 @@ while True:
                 head, body = send_error(400)
         except ValueError:
             head, body = send_error(400)
-        except e:
+        except:
             head, body = send_error(500)
         finally:
+            print("Chegou Aqui\n %s \n%s" % (head, body))
             cli.send(head)
             cli.send(body)
-
+            break
 
     cli.close()
     print('<conexao fechada>')
