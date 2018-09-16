@@ -17,14 +17,16 @@
 > Note que usar algum programa ou biblioteca pronta não equivale a implementar um protocolo
 > de camada de aplicação! Use diretamente a API de sockets de baixo nível disponível na sua
 > linguagem / plataforma. Durante a aula, mostramos alguns exemplos do uso de sockets TCP
-> em Python. Esses exemplos estão disponíveis aqui.
+> em Python. Esses exemplos
+> [estão disponíveis aqui](https://gist.github.com/thotypous/10a315490c9c16f0d648f8357e90a349).
 >
 > Caso você opte por alguma plataforma que não tenha suporte nativo a sockets, por exemplo
 > FPGA ou microcontrolador, por enquanto você pode 1) trabalhar apenas com testes unitários;
 >  2) trabalhar com simulação e integrar sockets ao simulador; ou 3) executar sockets em um
 > computador para emular a parte ainda inexistente do circuito, e comunicar-se com a placa
 > de desenvolvimento por meio de algum protocolo simples. Algumas dessas estratégias são
-> exemplificadas neste esboço em Bluespec.
+> exemplificadas
+> [neste esboço em Bluespec](https://pmatias.me/cco130/public/files/exemplos_bluespec.tar.gz).
 
 ## Test.sh
 
