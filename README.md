@@ -4,6 +4,7 @@
 
 
 > **Etapa 1**
+>
 > O objetivo da primeira etapa é adquirir alguma vivência no uso de sockets. Implemente
 > algum protocolo qualquer de camada de aplicação usando sockets TCP ou UDP, na linguagem
 > e na plataforma de sua escolha.
