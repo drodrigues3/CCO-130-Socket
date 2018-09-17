@@ -4,10 +4,10 @@ import socket
 import os
 import random
 from string import Template
-from Timer import Timer
+from TimerLogger import Timer, log_info
 
 CRLF = "\r\n"
-CHUNK_SIZE = 4096
+BUFFER_SIZE = 4096
 DOMAINS_PREFIXES = ['a', 'b', 'c']
 
 # Implementa uma requisição GET seguindo o padrão abaixo
@@ -47,7 +47,7 @@ def get_tile_web(z_zoom, x_lat, y_lon):
         content_length = False
         while True:
             # Unix manual page recv(2)
-            chunk = sock.recv(CHUNK_SIZE)
+            chunk = sock.recv(BUFFER_SIZE)
             if not chunk:
                 # connection ended
                 break
@@ -83,6 +83,7 @@ def get_tile_file(z_zoom, x_lat, y_lon):
     filename = filenameTpl.substitute(z_zoom=z_zoom, x_lat=x_lat, y_lon=y_lon)
 
     if not os.path.exists(filename):
+        log_info('Cache miss')
         head, body = get_tile_web(z_zoom, x_lat, y_lon)
         with open(filename, 'bw') as file:
             file.write(body)

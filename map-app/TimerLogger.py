@@ -6,6 +6,9 @@ LOG_FILENAME = './tile-cache/app.log'
 logging.basicConfig(format=FORMAT, filename=LOG_FILENAME, level=logging.DEBUG)
 logger = logging.getLogger('map-app')
 
+def log_info(msg=None):
+    logger.info(msg)
+
 class Timer:
     def __init__(self, function_name=None):
         self.function_name = function_name
