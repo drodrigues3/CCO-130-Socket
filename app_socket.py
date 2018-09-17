@@ -4,9 +4,11 @@ import sys
 import time
 import pages
 
+PORT=8080
+
 s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-s.bind(("",8081))
+s.bind(("", PORT))
 s.listen(1)
 
 version_system = "CCO-130 Socket"

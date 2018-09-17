@@ -2,21 +2,29 @@
 # -*- encoding: utf-8 -*-
 import socket, select
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-s.bind(('', 8000))
-s.listen(1)
-s.setblocking(0)
+# The address family should be AF_INET (the default), AF_INET6, AF_UNIX, AF_CAN, AF_PACKET, or AF_RDS.
+# The socket type should be SOCK_STREAM (the default), SOCK_DGRAM, SOCK_RAW or perhaps one of the other SOCK_ constants.
+s = socket.socket(family=socket.AF_INET, type=socket.SOCK_STREAM)
+# setsockopt(level, optname, value: int), Unix manual page setsockopt(2)
+sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+sock.bind(('', 8080))
+sock.listen(1)
+sock.setblocking(0)
 
+# emtpy list
 clientes = []
+# empty dic
 reqs = {}
 
 while True:
+    # rlist: wait until ready for reading
+    # wlist: wait until ready for writing
+    # xlist: wait for an “exceptional condition” (see the manual page for what your system considers such a condition)
     rlist, wlist, xlist = select.select(clientes + [s], [], [])
     print(rlist)
     for cli in rlist:
         if cli == s:
-            cli, addr = s.accept()
+            cli, addr = sock.accept()
             cli.setblocking(0)
             clientes.append(cli)
             reqs[cli] = b''
