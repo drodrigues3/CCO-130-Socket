@@ -4,6 +4,7 @@ import socket
 import os
 import random
 from string import Template
+from Timer import Timer
 
 CRLF = "\r\n"
 CHUNK_SIZE = 4096
@@ -89,7 +90,12 @@ def get_tile_file(z_zoom, x_lat, y_lon):
     return filename
 
 def test_get_tile_web():
-    get_tile_web(4, 4, 7)
+    with Timer('get_tile_web') as timer:
+        get_tile_web(4, 4, 7)
 
 def test_get_tile_file():
-    get_tile_file(4, 4, 7)
+    with Timer('get_tile_file') as timer:
+        get_tile_file(4, 4, 7)
+
+test_get_tile_web()
+test_get_tile_file()
