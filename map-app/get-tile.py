@@ -1,8 +1,9 @@
 #!/usr/bin/python3
 # -*- encoding: utf-8 -*-
 import socket
-from string import Template
+import os
 import random
+from string import Template
 
 CRLF = "\r\n"
 CHUNK_SIZE = 4096
@@ -37,14 +38,13 @@ def get_tile_web(z_zoom, x_lat, y_lon):
 
     filenameTpl = Template('tile-cache/$z_zoom-$x_lat-$y_lon.png.bin')
     filename = filenameTpl.substitute(z_zoom=z_zoom, x_lat=x_lat, y_lon=y_lon)
-    print('savim to file ' + filename)
     with open(filename, 'bw') as file:
+        # setup
         response = b''
         head = b''
         body = b''
         content_length = False
         while True:
-            # print('recieving chunks')
             # Unix manual page recv(2)
             chunk = sock.recv(CHUNK_SIZE)
             if not chunk:
@@ -63,12 +63,33 @@ def get_tile_web(z_zoom, x_lat, y_lon):
                 content_length = int(headers.get(b'Content-Length', 0))
 
             if len(body) == content_length:
+                # no more body
                 break
-    print(head.decode())
-
-    print('closing')
+    # shutdown
     sock.shutdown(socket.SHUT_RDWR)
     sock.close()
 
+    return head, body
+
+def get_tile_file(z_zoom, x_lat, y_lon):
+    dirNameTpl = Template('tile-cache/$z_zoom/$x_lat/')
+    dirName = dirNameTpl.substitute(z_zoom=z_zoom, x_lat=x_lat, y_lon=y_lon)
+
+    if not os.path.exists(dirName):
+        os.makedirs(dirName)
+
+    filenameTpl = Template('tile-cache/$z_zoom/$x_lat/$y_lon.png')
+    filename = filenameTpl.substitute(z_zoom=z_zoom, x_lat=x_lat, y_lon=y_lon)
+
+    if not os.path.exists(filename):
+        head, body = get_tile_web(z_zoom, x_lat, y_lon)
+        with open(filename, 'bw') as file:
+            file.write(body)
+
+    return filename
+
 def test_get_tile_web():
     get_tile_web(4, 4, 7)
+
+def test_get_tile_file():
+    get_tile_file(4, 4, 7)
