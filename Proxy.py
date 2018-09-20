@@ -3,18 +3,18 @@ import email
 import io
 import socket
 
-port=8001
+PORT=8080
 
 print('iniciando programa')
 try:
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    s.bind(('', port))
+    s.bind(('', PORT))
     s.listen(1)
 except e:
     print("Alguma coisa deu errado")
 finally:
-    print("Escutando na porta %d" % port)
+    print("Escutando na porta %d" % PORT)
 
 
 def parse_data(data):
