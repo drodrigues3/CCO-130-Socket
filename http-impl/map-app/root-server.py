@@ -4,6 +4,8 @@ import socket
 import selectors
 import threading
 from TestLocalHostServer import TestLocalHostServer
+from Server import Server
+from TestLocalHostServer import TestLocalHostServer
 from TimerLogger import Timer, log_info
 
 HTTP_PORT = 8080
